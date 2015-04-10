@@ -13,9 +13,7 @@ package com.floern.android.app;
  */
 public class Fragment extends android.support.v4.app.Fragment {
 	
-	
-	
-	
+		
 	@Override
 	public void onStart() {
 		super.onStart();
