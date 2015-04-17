@@ -5,9 +5,18 @@ package com.floern.android.app;
 
 import java.util.List;
 
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 /**
  * A subclass of Fragment with some additional features.
  * <p>
+ * {@link #findViewById(int)} - Look for a child view with the given ID.<br>
+ * {@link #findImageViewById(int)} - Look for a child ImageView with the given ID.<br>
+ * {@link #findTextViewById(int)} - Look for a child TextView with the given ID.<br>
+ * {@link #findViewGroupById(int)} - Look for a child ViewGroup with the given ID.<br>
  * {@link #onShow()} - The Fragment has been created or got visible.<br>
  * {@link #onHide()} - The Fragment has been hidden or removed.<br>
  * {@link #onBackPressed()} - The User pressed the back button.<br>
@@ -23,6 +32,46 @@ import java.util.List;
  */
 public class Fragment extends android.support.v4.app.Fragment {
 	
+	
+	/**
+	 * Look for a child view with the given ID.
+	 * @param id The ID to search for.
+	 * @return The view that has the given ID in the hierarchy or null.
+	 */
+	public View findViewById(int id) {
+		return getView().findViewById(id);
+	}
+	
+	
+	/**
+	 * Look for a child ImageView with the given ID.
+	 * @param id The ID to search for.
+	 * @return The ImageView that has the given ID in the hierarchy or null.
+	 */
+	public ImageView findImageViewById(int id) {
+		return (ImageView) getView().findViewById(id);
+	}
+	
+	
+	/**
+	 * Look for a child TextView with the given ID.
+	 * @param id The ID to search for.
+	 * @return The TextView that has the given ID in the hierarchy or null.
+	 */
+	public TextView findTextViewById(int id) {
+		return (TextView) getView().findViewById(id);
+	}
+	
+	
+	/**
+	 * Look for a child ViewGroup with the given ID.
+	 * @param id The ID to search for.
+	 * @return The ViewGroup that has the given ID in the hierarchy or null.
+	 */
+	public ViewGroup findViewGroupById(int id) {
+		return (ViewGroup) getView().findViewById(id);
+	}
+
 	
 	@Override
 	public void onStart() {
@@ -60,14 +109,18 @@ public class Fragment extends android.support.v4.app.Fragment {
 
 		// propagate the hidden state change down to child Fragments
 		List<android.support.v4.app.Fragment> childFragments = getChildFragmentManager().getFragments();
-		for (android.support.v4.app.Fragment childFragment : childFragments) {
-			childFragment.onHiddenChanged(hidden);
+		if (childFragments != null) {
+			for (android.support.v4.app.Fragment childFragment : childFragments) {
+				if (childFragment != null) {
+					childFragment.onHiddenChanged(hidden);
+				}
+			}
 		}
 	}
 	
 
 	/**
-	 * The Fragment has been created or got visible.
+	 * The Fragment (or the Activity) has been created or got visible.
 	 */
 	public void onShow() {
 		// to be overidden
@@ -75,7 +128,7 @@ public class Fragment extends android.support.v4.app.Fragment {
 	
 	
 	/**
-	 * The Fragment has been hidden or removed.
+	 * The Fragment (or the Activity) has been hidden or removed.
 	 */
 	public void onHide() {
 		// to be overidden
@@ -105,7 +158,7 @@ public class Fragment extends android.support.v4.app.Fragment {
 		
 		// iterate visible Fragments
 		for (android.support.v4.app.Fragment fragment : fragments) {
-			if (fragment.isVisible() && fragment instanceof Fragment) {
+			if (fragment instanceof Fragment && fragment.isVisible()) {
 				boolean consumed = ((Fragment)fragment).onBackPressed();
 				if (consumed) return true;
 			}
@@ -121,7 +174,7 @@ public class Fragment extends android.support.v4.app.Fragment {
 	 * @param value Argument String value
 	 * @see #getArguments()
 	 */
-	protected void overrideArgument(String key, String value) {
+	public void overrideArgument(String key, String value) {
 		getArguments().putString(key, value);
 	}
 	
@@ -132,7 +185,7 @@ public class Fragment extends android.support.v4.app.Fragment {
 	 * @param value Argument integer value
 	 * @see #getArguments()
 	 */
-	protected void overrideArgument(String key, int value) {
+	public void overrideArgument(String key, int value) {
 		getArguments().putInt(key, value);
 	}
 	
@@ -143,7 +196,7 @@ public class Fragment extends android.support.v4.app.Fragment {
 	 * @param value Argument long value
 	 * @see #getArguments()
 	 */
-	protected void overrideArgument(String key, long value) {
+	public void overrideArgument(String key, long value) {
 		getArguments().putLong(key, value);
 	}
 	
@@ -154,9 +207,21 @@ public class Fragment extends android.support.v4.app.Fragment {
 	 * @param value Argument boolean value
 	 * @see #getArguments()
 	 */
-	protected void overrideArgument(String key, boolean value) {
+	public void overrideArgument(String key, boolean value) {
 		getArguments().putBoolean(key, value);
 	}
-	
+
+
+	/**
+	 * Find the Fragment that is directly attached to the Activity.
+	 * @return Top level Fragment
+	 */
+	public android.support.v4.app.Fragment getTopLevelFragment() {
+		android.support.v4.app.Fragment fragment = this;
+		while (fragment.getParentFragment() != null) {
+			fragment = fragment.getParentFragment();
+		}
+		return fragment;
+	}
 	
 }
