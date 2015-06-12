@@ -1,7 +1,7 @@
 /*
  * Floern, dev@floern.com, 2015, MIT Licence
  */
-package com.floern.android.util.BitmapFactory;
+package com.floern.android.util;
 
 import android.annotation.TargetApi;
 import android.content.res.Resources;
