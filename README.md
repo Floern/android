@@ -7,3 +7,4 @@ Various pieces of code to be used with the Android SDK.
 
 ## util
 [`BundleBuilder`](src/com/floern/android/util/BundleBuilder.java) - utility class to create a [`Bundle`](http://developer.android.com/reference/android/os/Bundle.html) using the builder pattern.  
+[`BitmapFactoryOptionsBuilder`](src/com/floern/android/util/BitmapFactoryOptionsBuilder.java) - utility class to create [`BitmapFactory.Options`](http://developer.android.com/reference/android/graphics/BitmapFactory.Options.html) using the builder pattern.
