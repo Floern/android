@@ -5,18 +5,24 @@ package com.floern.android.app;
 
 import java.util.List;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
  * A subclass of Fragment with some additional features.
  * <p>
+ * {@link #getLayoutInflater()} - Get a LayoutInflater instance.<br>
  * {@link #findViewById(int)} - Look for a child view with the given ID.<br>
  * {@link #findImageViewById(int)} - Look for a child ImageView with the given ID.<br>
  * {@link #findTextViewById(int)} - Look for a child TextView with the given ID.<br>
+ * {@link #findEditTextById(int)} - Look for a child EditText with the given ID.<br>
  * {@link #findViewGroupById(int)} - Look for a child ViewGroup with the given ID.<br>
+ * {@link #findAbsListViewById(int)} - Look for a child AbsListView with the given ID.<br>
  * {@link #onShow()} - The Fragment has been created or got visible.<br>
  * {@link #onHide()} - The Fragment has been hidden or removed.<br>
  * {@link #onBackPressed()} - The User pressed the back button.<br>
@@ -31,6 +37,15 @@ import android.widget.TextView;
  * @author Floern
  */
 public class Fragment extends android.support.v4.app.Fragment {
+	
+	
+	/**
+	 * Get the Activity's LayoutInflater instance.
+	 * @return
+	 */
+	public LayoutInflater getLayoutInflater() {
+		return getActivity().getLayoutInflater();
+	}
 	
 	
 	/**
@@ -64,12 +79,32 @@ public class Fragment extends android.support.v4.app.Fragment {
 	
 	
 	/**
+	 * Look for a child EditText with the given ID.
+	 * @param id The ID to search for.
+	 * @return The EditText that has the given ID in the hierarchy or null.
+	 */
+	public EditText findEditTextById(int id) {
+		return (EditText) getView().findViewById(id);
+	}
+	
+	
+	/**
 	 * Look for a child ViewGroup with the given ID.
 	 * @param id The ID to search for.
 	 * @return The ViewGroup that has the given ID in the hierarchy or null.
 	 */
 	public ViewGroup findViewGroupById(int id) {
 		return (ViewGroup) getView().findViewById(id);
+	}
+
+	
+	/**
+	 * Look for a child AbsListView with the given ID.
+	 * @param id The ID to search for.
+	 * @return The AbsListView that has the given ID in the hierarchy or null.
+	 */
+	public AbsListView findAbsListViewById(int id) {
+		return (AbsListView) getView().findViewById(id);
 	}
 
 	
@@ -96,7 +131,7 @@ public class Fragment extends android.support.v4.app.Fragment {
 	
 	
 	@Override
-	public void onHiddenChanged(boolean hidden) {
+	final public void onHiddenChanged(boolean hidden) {
 		super.onHiddenChanged(hidden);
 		
 		// invoke visibility callback method
@@ -120,7 +155,8 @@ public class Fragment extends android.support.v4.app.Fragment {
 	
 
 	/**
-	 * The Fragment (or the Activity) has been created or got visible.
+	 * The Fragment (or the Activity) got visible.<br>
+	 * May be overridden by a subclass.
 	 */
 	public void onShow() {
 		// to be overidden
@@ -128,7 +164,8 @@ public class Fragment extends android.support.v4.app.Fragment {
 	
 	
 	/**
-	 * The Fragment (or the Activity) has been hidden or removed.
+	 * The Fragment (or the Activity) has been hidden.<br>
+	 * May be overridden by a subclass.
 	 */
 	public void onHide() {
 		// to be overidden
