@@ -3,7 +3,7 @@
  */
 package com.floern.android.app;
 
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 
 /**
  * A subclass of Activity with some additional features.
@@ -12,7 +12,7 @@ import android.support.v4.app.FragmentActivity;
  * 
  * @author Floern
  */
-public class Activity extends FragmentActivity {
+public class Activity extends AppCompatActivity {
 	
 	
 	@Override
