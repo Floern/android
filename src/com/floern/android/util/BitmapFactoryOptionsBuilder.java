@@ -1,5 +1,5 @@
 /*
- * Floern, dev@floern.com, 2015, MIT Licence
+ * Floern, dev@floern.com, 2016, MIT Licence
  */
 package com.floern.android.util;
 
